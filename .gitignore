@@ -70,3 +70,7 @@ coverage.xml
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Google API credentials
+credentials.json
+token.json
