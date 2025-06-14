@@ -1,125 +1,289 @@
-# ClickUp Tracker
+# ClickUp & Asana Tracker Integration
 
-A Python application that automatically syncs ClickUp tasks to Google Sheets for tracking and reporting purposes.
+A comprehensive project management integration that syncs data from ClickUp and Asana to Google Sheets for unified tracking and reporting.
 
-## What We've Built
+## 🚀 Overview
+
+This project provides automated data synchronization between project management platforms (ClickUp, Asana) and Google Sheets, enabling centralized tracking, reporting, and analysis of tasks, projects, and team workflows.
+
+## 📋 Features
+
+### ✅ **Current Functionality**
+- **ClickUp Integration**: Full API connection and data export
+- **Asana Integration**: Complete section-based data organization
+- **Google Sheets Export**: Automated data writing with proper formatting
+- **Multi-Section Support**: Separate tabs for each project section
+- **Task Details**: Comprehensive task information including assignees, dates, status, and comments
+
+### 🏗️ **Architecture**
+```
+├── src/
+│   ├── clickup_service.py          # ClickUp API integration
+│   ├── asana_service.py            # Asana API integration
+│   ├── sheets_service.py           # ClickUp → Google Sheets
+│   ├── asana_sheets_service.py     # Asana → Google Sheets
+│   └── main.py                     # Main execution script
+├── credentials.json                # Google Sheets API credentials
+├── .env                           # API tokens (not in repo)
+└── README.md
+```
+
+## 🔧 Setup & Installation
+
+### Prerequisites
+- Python 3.8+
+- Google Cloud Project with Sheets API enabled
+- ClickUp API token
+- Asana Personal Access Token
+
+### Installation
+```bash
+# Clone repository
+git clone <repository-url>
+cd ClickUpTracker
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your API tokens
+```
+
+### Configuration
+1. **Google Sheets API**: Place `credentials.json` in project root
+2. **ClickUp**: Add `CLICKUP_API_TOKEN` to `.env`
+3. **Asana**: Add `ASANA_API_TOKEN` to `.env`
+
+## 📊 Service Integrations
+
+---
+
+## 🎯 **ClickUp Integration**
 
 ### Current Features
+- ✅ API connection and authentication
+- ✅ Space and project discovery
+- ✅ Task retrieval with full details
+- ✅ Google Sheets export functionality
+- ✅ Real-time data synchronization
 
-#### 1. **Multi-Board Data Fetching**
-- **External Issues**: List ID `75793048` 
-- **Internal Issues**: List ID `901103923965`
-- **Feature Requests**: List ID `901110903380`
-
-#### 2. **Google Sheets Integration**
-- **Production Tab**: Issues (External + Internal) → 5 columns
-  - A: Ticket ID/Link
-  - B: Subject  
-  - C: Severity (raw ClickUp priority)
-  - D: Status (raw ClickUp status)
-  - E: Ticket Filed By (email from custom field or "Not Available")
-
-- **Project Summary Tab**: Feature Requests → 5 columns (rows 14+)
-  - A: Type of Request
-  - B: Summary / Requirements
-  - C: Notes/Next Steps
-  - D: Status
-  - E: Owner/Group
-
-#### 3. **Smart Data Handling**
-- **Non-destructive writes**: Checks for existing data before writing
-- **Email extraction**: From ClickUp custom field "Work email address?"
-- **Append-only**: Adds new rows without clearing existing manual entries
-- **Raw ClickUp data**: No field mapping/translation
-
-### Current File Structure
-```
-ClickUpTracker/
-├── src/
-│   ├── clickup_service.py     # Main ClickUp API integration
-│   └── sheets_service.py      # Google Sheets API service
-├── .env                       # API tokens and configuration
-├── credentials.json           # Google Sheets API credentials
-├── token.json                 # Google Sheets API token
-└── README.md                  # This file
+### Usage
+```bash
+# Run ClickUp sync
+python3 src/clickup_service.py
 ```
 
-### Current Workflow
-1. Connect to ClickUp API using token
-2. Fetch tasks from 3 boards (2 issue boards + 1 feature board)
-3. Extract email from custom fields
-4. Write issues to "production" tab (append-only)
-5. Write features to "Project Summary" tab (write-once)
+### Data Structure
+- **Spaces**: Top-level organizational units
+- **Projects**: Contains lists and tasks
+- **Tasks**: Individual work items with assignees, dates, status
+- **Export Format**: Organized by space/project hierarchy
 
-## Current State & Limitations
+### ClickUp Roadmap
 
-### ✅ Working Features
-- ClickUp API connection and data fetching
-- Google Sheets writing (5 columns each tab)
-- Email extraction with fallback to "Not Available"
-- Non-destructive data handling
-- Multi-board support
+#### 🎨 **Phase 1: Enhanced Formatting**
+- [ ] **Consistent Styling**: Match corporate design standards
+- [ ] **Column Optimization**: Auto-resize based on content
+- [ ] **Header Standardization**: Uniform section headers across all sheets
+- [ ] **Brand Integration**: Add company logos and color schemes
 
-### ⚠️ Current Limitations
-- No customer-specific filtering
-- No dynamic board selection
-- No syntax-based task categorization
-- Manual list ID management
-- Single spreadsheet target
+#### 🌈 **Phase 2: Conditional Formatting**
+- [ ] **Status Color Coding**:
+  - 🟢 **Completed**: Green background
+  - 🟡 **In Progress**: Yellow background  
+  - 🔴 **Blocked/On Hold**: Red background
+  - 🔵 **To Do**: Blue background
+  - ⚪ **Cancelled**: Gray background
+- [ ] **Priority Indicators**: High/Medium/Low priority color coding
+- [ ] **Date-based Alerts**: Overdue tasks highlighted in red
+- [ ] **Assignee Formatting**: Color-code by team member
 
-## Next Steps
+#### 💬 **Phase 3: Enhanced Comments & Updates**
+- [ ] **Comment Threading**: Show full comment history
+- [ ] **Last Update Tracking**: Real-time last modified timestamps
+- [ ] **Author Attribution**: Show who made each comment/update
+- [ ] **Update Notifications**: Highlight recent changes
 
-### Phase 1: Dynamic Board & Customer Filtering
+#### 📈 **Phase 4: Advanced Analytics**
+- [ ] **Burndown Charts**: Visual progress tracking
+- [ ] **Velocity Metrics**: Team performance analytics
+- [ ] **Time Tracking Integration**: Hours logged vs estimated
+- [ ] **Custom Dashboards**: Executive summary views
 
-#### 1.1 **Dynamic Board Fetching**
-- Automatically discover all boards in workspace instead of hardcoded list IDs
-- Allow users to select which boards to export from
-- Support for board filtering by name or type
+---
 
-#### 1.2 **Customer Name Detection**
-Design a flexible syntax system that doesn't break if not followed:
+## 🎨 **Asana Integration**
 
-**Primary Syntax (Preferred)**
+### Current Features
+- ✅ API connection and workspace discovery
+- ✅ Section-based task organization (Live, QA, Hold, etc.)
+- ✅ Separate Google Sheets tabs per section
+- ✅ Comprehensive task details including comments
+- ✅ Summary dashboard with section counts
+- ✅ Support for 84+ tasks across 9 sections
+
+### Usage
+```bash
+# Run Asana sync
+python3 src/asana_service.py
 ```
-Format: [Customer Name] | [Project Type] | [Description]
-Example: [DIRTcar] | [Bug Fix] | [Stream freezing during live events]
+
+### Data Structure
+- **Workspaces**: wurl.com, transmit.live
+- **Projects**: SSAI Dashboard for FAST Deliveries
+- **Sections**: HOLD, Funnel, Onboarding, Live, QA, etc.
+- **Export Format**: One tab per section with task details
+
+### Section Mapping
+```
+ASANA SECTIONS → GOOGLE SHEETS TABS
+├── HOLD - Further Review Needed → "HOLD Further Review Needed"
+├── Funnel → "Funnel"  
+├── Onboarding → "Onboarding"
+├── Submitted to Transmit → "Submitted to Transmit"
+├── Transmit Bootstrap Configured → "Transmit Bootstrap Config..."
+├── Ready for Handoff → "Ready for Handoff"
+├── Streamer QA → "Streamer QA"
+├── Live → "Live"
+├── Cancelled Configuration → "Cancelled Configuration"
+└── Summary → "Asana Summary"
 ```
 
-**Fallback Detection Methods** (when syntax not followed)
-- Email domain mapping (`@dirtcar.com` → `DIRTcar`)
-- Keyword detection in subject line
-- Custom field parsing
-- Default to "General" if no customer identified
+### Asana Roadmap
 
-#### 1.3 **Multi-Tier Customer Detection Logic**
-- Check for bracketed customer syntax in task titles
-- Parse email domains for known customer mappings
-- Search for customer keywords in task descriptions
-- Check custom fields for customer identification data
-- Graceful fallback to 'General' category when no customer is identified
+#### 🎨 **Phase 1: Enhanced Formatting**
+- [ ] **Section Headers**: Branded headers for each Asana section
+- [ ] **Live Channel Focus**: Special formatting for "Live" section (most critical)
+- [ ] **Status Indicators**: Visual cues for channel health
+- [ ] **Column Standardization**: Match ClickUp sheet formatting
 
-### Phase 2: Customer-Specific Routing
+#### 🌈 **Phase 2: Conditional Formatting**
+- [ ] **Channel Status Color Coding**:
+  - 🔴 **Live**: Red background (active channels)
+  - 🟡 **Streamer QA**: Yellow background (testing phase)
+  - 🟢 **Ready for Handoff**: Green background (ready to go live)
+  - 🔵 **Onboarding**: Blue background (new channels)
+  - ⏸️ **HOLD**: Orange background (needs review)
+  - ❌ **Cancelled**: Gray background (cancelled configs)
+- [ ] **Priority Channels**: Highlight high-priority streaming channels
+- [ ] **SLA Tracking**: Color-code based on time in each section
+- [ ] **Assignment Alerts**: Highlight unassigned critical tasks
 
-#### 2.1 **Customer Spreadsheet Mapping**
-- Create mapping system for customers to their dedicated spreadsheets
-- Support for customer-specific sheet templates
-- Fallback to main "General" spreadsheet for unidentified customers
+#### 💬 **Phase 3: Enhanced Comments & Updates**
+- [ ] **Last Comment Focus**: Change "Last Update" → "Last Comment"
+- [ ] **Comment Formatting**: Better readability with author/timestamp
+- [ ] **Recent Activity**: Highlight channels with recent comments
+- [ ] **Escalation Tracking**: Flag channels needing attention
 
-#### 2.2 **Dynamic Export Targets**
-- Export specific customer data to their dedicated spreadsheets
-- Batch processing to export all customers to respective sheets
-- Option to force creation of new customer spreadsheets
+#### 📺 **Phase 4: Streaming-Specific Features**
+- [ ] **Channel Health Dashboard**: Live channel monitoring
+- [ ] **Go-Live Timeline**: Track progression through pipeline
+- [ ] **Performance Metrics**: Channel success/failure rates
+- [ ] **Automated Alerts**: Notify when channels move to "Live"
+- [ ] **Integration Webhooks**: Real-time updates from Asana
 
-### Phase 3: Enhanced Configuration
+---
 
-#### 3.1 **Configuration Management**
-- Move hardcoded IDs to config files
-- Environment-based settings (dev/prod)
-- Customer mapping configuration
-- Board selection presets
+## 🚀 **Cross-Platform Features** (Future)
 
-#### 3.2 **Error Handling & Logging**
-- Detailed logging for debugging
-- Graceful handling of API failures
-- Data validation and cleanup
-- Retry mechanisms for failed exports
+#### 🔄 **Phase 5: Unified Dashboard**
+- [ ] **Combined Overview**: ClickUp + Asana in single view
+- [ ] **Cross-Platform Search**: Find tasks across both systems
+- [ ] **Unified Reporting**: Combined analytics and insights
+- [ ] **Workflow Integration**: Link ClickUp projects to Asana channels
+
+#### ⚡ **Phase 6: Automation & Intelligence**
+- [ ] **Auto-Sync Scheduling**: Hourly/daily automatic updates
+- [ ] **Smart Notifications**: AI-powered alerts for important changes
+- [ ] **Predictive Analytics**: Forecast project completion times
+- [ ] **Custom Workflows**: Trigger actions based on status changes
+
+---
+
+## 🛠️ **Development**
+
+### Current Branch Structure
+- `main`: Stable ClickUp integration
+- `test-asana-api`: Asana integration development
+- Feature branches: `feature/specific-enhancement`
+
+### Running Tests
+```bash
+# Test ClickUp connection
+python3 src/clickup_service.py
+
+# Test Asana connection  
+python3 src/asana_service.py
+
+# Test Google Sheets integration
+python3 src/sheets_service.py
+```
+
+### Contributing
+1. Create feature branch from `main`
+2. Implement changes with tests
+3. Update documentation
+4. Submit pull request with detailed description
+
+## 📝 **API Documentation**
+
+### ClickUp API
+- **Base URL**: `https://api.clickup.com/api/v2/`
+- **Authentication**: Bearer token
+- **Rate Limits**: 100 requests/minute
+
+### Asana API  
+- **Base URL**: `https://app.asana.com/api/1.0/`
+- **Authentication**: Personal Access Token
+- **Rate Limits**: 1500 requests/hour
+
+### Google Sheets API
+- **Version**: v4
+- **Authentication**: OAuth 2.0
+- **Permissions**: Read/Write spreadsheets
+
+## 🔐 **Security**
+
+- API tokens stored in `.env` (never committed)
+- Google credentials in separate `credentials.json`
+- Regular token rotation recommended
+- Access logs for audit trail
+
+## 📞 **Support**
+
+For issues or questions:
+1. Check existing GitHub issues
+2. Review API documentation
+3. Contact development team
+4. Create new issue with detailed description
+
+---
+
+## 📈 **Current Status**
+
+### ✅ **Completed**
+- ClickUp API integration
+- Asana API integration  
+- Google Sheets export functionality
+- Section-based organization
+- Multi-workspace support
+
+### 🔄 **In Progress**
+- Enhanced formatting and conditional formatting
+- Comment system improvements
+- Cross-platform unified dashboard
+
+### 📋 **Planned**
+- Advanced analytics and reporting
+- Automated scheduling and notifications
+- AI-powered insights and predictions
+
+---
+
+*Last Updated: June 14, 2025*
+*Version: 2.0 (Asana Integration)*
