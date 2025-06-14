@@ -14,9 +14,28 @@ class GoogleSheetsService:
         """Simple authentication with Google Sheets API"""
         creds = None
         
-        # Look for credentials in parent directory (since we're in src/)
-        creds_path = '../credentials.json'
-        token_path = '../token.json'
+        # Try multiple paths for credentials
+        possible_paths = [
+            'credentials.json',           # Same directory as script
+            '../credentials.json',        # Parent directory  
+            '../../credentials.json'      # Two levels up
+        ]
+        
+        creds_path = None
+        token_path = None
+        
+        # Find the credentials file
+        for path in possible_paths:
+            if os.path.exists(path):
+                creds_path = path
+                # Set token path in same directory as credentials
+                token_path = path.replace('credentials.json', 'token.json')
+                break
+        
+        if not creds_path:
+            raise FileNotFoundError("credentials.json not found in any expected location")
+        
+        print(f"🔑 Using credentials from: {creds_path}")
         
         # Check if we have saved credentials
         if os.path.exists(token_path):
@@ -27,7 +46,7 @@ class GoogleSheetsService:
             if creds and creds.expired and creds.refresh_token:
                 creds.refresh(Request())
             else:
-                flow = InstalledAppFlow.from_client_secrets_file(creds_path, self.SCOPES)  # Fixed typo
+                flow = InstalledAppFlow.from_client_secrets_file(creds_path, self.SCOPES)
                 creds = flow.run_local_server(port=0)
             
             # Save credentials for next time
