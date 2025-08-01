@@ -287,3 +287,30 @@ For issues or questions:
 
 *Last Updated: June 14, 2025*
 *Version: 2.0 (Asana Integration)*
+
+---
+
+## 🚦 Next Steps (Refactor Branch)
+
+This branch (`refactor/export-pipe-logic-tests`) includes:
+- Refactored ClickUp export logic for maintainability
+- Removal of redundant Dirt Vision-specific test logic
+- Unified pipe delimiter handling for all accounts
+- Improved test coverage for row formatting and range calculation
+
+### Action Items
+1. **Review Refactored Logic**
+   - Ensure all export functions use the new pipe delimiter logic
+   - Confirm that account-specific logic is handled by delimiter, not hardcoded names
+2. **Expand Test Coverage**
+   - Add more edge case tests for row formatting and spreadsheet range calculation
+   - Validate error handling and robustness
+3. **Code Review & Merge**
+   - Review changes in this branch
+   - Merge into `main` after validation
+4. **Documentation**
+   - Update usage examples to reflect new CLI and export logic
+   - Document any new environment variables or configuration changes
+5. **Future Enhancements**
+   - Add more business logic tests
+   - Continue roadmap items for formatting, analytics, and dashboard features
