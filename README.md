@@ -84,38 +84,7 @@ python3 src/clickup_service.py
 - **Tasks**: Individual work items with assignees, dates, status
 - **Export Format**: Organized by space/project hierarchy
 
-### ClickUp Roadmap
 
-#### 🎨 **Phase 1: Enhanced Formatting**
-- [ ] **Consistent Styling**: Match corporate design standards
-- [ ] **Column Optimization**: Auto-resize based on content
-- [ ] **Header Standardization**: Uniform section headers across all sheets
-- [ ] **Brand Integration**: Add company logos and color schemes
-
-#### 🌈 **Phase 2: Conditional Formatting**
-- [ ] **Status Color Coding**:
-  - 🟢 **Completed**: Green background
-  - 🟡 **In Progress**: Yellow background  
-  - 🔴 **Blocked/On Hold**: Red background
-  - 🔵 **To Do**: Blue background
-  - ⚪ **Cancelled**: Gray background
-- [ ] **Priority Indicators**: High/Medium/Low priority color coding
-- [ ] **Date-based Alerts**: Overdue tasks highlighted in red
-- [ ] **Assignee Formatting**: Color-code by team member
-
-#### 💬 **Phase 3: Enhanced Comments & Updates**
-- [ ] **Comment Threading**: Show full comment history
-- [ ] **Last Update Tracking**: Real-time last modified timestamps
-- [ ] **Author Attribution**: Show who made each comment/update
-- [ ] **Update Notifications**: Highlight recent changes
-
-#### 📈 **Phase 4: Advanced Analytics**
-- [ ] **Burndown Charts**: Visual progress tracking
-- [ ] **Velocity Metrics**: Team performance analytics
-- [ ] **Time Tracking Integration**: Hours logged vs estimated
-- [ ] **Custom Dashboards**: Executive summary views
-
----
 
 ## 🎨 **Asana Integration**
 
@@ -153,39 +122,6 @@ ASANA SECTIONS → GOOGLE SHEETS TABS
 ├── Cancelled Configuration → "Cancelled Configuration"
 └── Summary → "Asana Summary"
 ```
-
-### Asana Roadmap
-
-#### 🎨 **Phase 1: Enhanced Formatting**
-- [ ] **Section Headers**: Branded headers for each Asana section
-- [ ] **Live Channel Focus**: Special formatting for "Live" section (most critical)
-- [ ] **Status Indicators**: Visual cues for channel health
-- [ ] **Column Standardization**: Match ClickUp sheet formatting
-
-#### 🌈 **Phase 2: Conditional Formatting**
-- [ ] **Channel Status Color Coding**:
-  - 🔴 **Live**: Red background (active channels)
-  - 🟡 **Streamer QA**: Yellow background (testing phase)
-  - 🟢 **Ready for Handoff**: Green background (ready to go live)
-  - 🔵 **Onboarding**: Blue background (new channels)
-  - ⏸️ **HOLD**: Orange background (needs review)
-  - ❌ **Cancelled**: Gray background (cancelled configs)
-- [ ] **Priority Channels**: Highlight high-priority streaming channels
-- [ ] **SLA Tracking**: Color-code based on time in each section
-- [ ] **Assignment Alerts**: Highlight unassigned critical tasks
-
-#### 💬 **Phase 3: Enhanced Comments & Updates**
-- [ ] **Last Comment Focus**: Change "Last Update" → "Last Comment"
-- [ ] **Comment Formatting**: Better readability with author/timestamp
-- [ ] **Recent Activity**: Highlight channels with recent comments
-- [ ] **Escalation Tracking**: Flag channels needing attention
-
-#### 📺 **Phase 4: Streaming-Specific Features**
-- [ ] **Channel Health Dashboard**: Live channel monitoring
-- [ ] **Go-Live Timeline**: Track progression through pipeline
-- [ ] **Performance Metrics**: Channel success/failure rates
-- [ ] **Automated Alerts**: Notify when channels move to "Live"
-- [ ] **Integration Webhooks**: Real-time updates from Asana
 
 ---
 
@@ -282,14 +218,7 @@ For issues or questions:
 - Advanced analytics and reporting
 - Automated scheduling and notifications
 - AI-powered insights and predictions
-
----
-
-*Last Updated: June 14, 2025*
-*Version: 2.0 (Asana Integration)*
-
----
-
+- 
 ## 🚦 Next Steps (Refactor Branch)
 
 This branch (`refactor/export-pipe-logic-tests`) includes:
@@ -305,12 +234,6 @@ This branch (`refactor/export-pipe-logic-tests`) includes:
 2. **Expand Test Coverage**
    - Add more edge case tests for row formatting and spreadsheet range calculation
    - Validate error handling and robustness
-3. **Code Review & Merge**
-   - Review changes in this branch
-   - Merge into `main` after validation
-4. **Documentation**
-   - Update usage examples to reflect new CLI and export logic
-   - Document any new environment variables or configuration changes
-5. **Future Enhancements**
+3. **Future Enhancements**
    - Add more business logic tests
    - Continue roadmap items for formatting, analytics, and dashboard features
