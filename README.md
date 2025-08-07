@@ -1,63 +1,80 @@
+
 # ClickUp & Asana Tracker Integration
 
-A comprehensive project management integration that syncs data from ClickUp and Asana to Google Sheets for unified tracking and reporting.
+Automates export of tasks from ClickUp and Asana to Google Sheets for unified client tracking and reporting.
 
-## 🚀 Overview
+## Overview
 
-This project provides automated data synchronization between project management platforms (ClickUp, Asana) and Google Sheets, enabling centralized tracking, reporting, and analysis of tasks, projects, and team workflows.
+- **ClickUp**: Exports tasks from mapped boards to client-specific Google Sheets tabs.
+- **Asana**: Exports sectioned tasks to Google Sheets, each section gets its own tab.
+- **Google Sheets**: Data is appended, never overwrites headers. Credentials (`credentials.json`, `.env`) required in project root.
 
-## 📋 Features
+## Project Structure
 
-### ✅ **Current Functionality**
-- **ClickUp Integration**: Full API connection and data export
-- **Asana Integration**: Complete section-based data organization
-- **Google Sheets Export**: Automated data writing with proper formatting
-- **Multi-Section Support**: Separate tabs for each project section
-- **Task Details**: Comprehensive task information including assignees, dates, status, and comments
-
-### 🏗️ **Architecture**
 ```
-├── src/
-│   ├── clickup_service.py          # ClickUp API integration
-│   ├── asana_service.py            # Asana API integration
-│   ├── sheets_service.py           # ClickUp → Google Sheets
-│   ├── asana_sheets_service.py     # Asana → Google Sheets
-│   └── main.py                     # Main execution script
-├── credentials.json                # Google Sheets API credentials
-├── .env                           # API tokens (not in repo)
-└── README.md
+src/
+  clickup_service.py        # ClickUp API logic, export functions
+  asana_service.py          # Asana API logic, export functions
+  sheets_service.py         # Google Sheets API wrapper
+  asana_sheets_service.py   # Asana-specific Sheets logic
+tests/
+  test_clickup_service.py   # ClickUp API tests and data inspection
+  test_sheets.py            # Google Sheets integration tests
+credentials.json            # Google Sheets API credentials
+.env                        # API tokens (not in repo)
+README.md
+requirements.txt
 ```
 
-## 🔧 Setup & Installation
+## Setup
 
-### Prerequisites
-- Python 3.8+
-- Google Cloud Project with Sheets API enabled
-- ClickUp API token
-- Asana Personal Access Token
+1. Python 3.8+
+2. Place `credentials.json` and `token.json` in project root.
+3. Add `CLICKUP_API_TOKEN` and `ASANA_API_TOKEN` to `.env`.
+4. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### Installation
-```bash
-# Clone repository
-git clone <repository-url>
-cd ClickUpTracker
+## Usage
 
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+- Export ClickUp tasks for all clients:
+  ```bash
+  python3 src/clickup_service.py allclients
+  ```
+- Export for a single client:
+  ```bash
+  python3 src/clickup_service.py yahoo
+  ```
+- Export Asana tasks:
+  ```bash
+  python3 src/asana_service.py
+  ```
+- Run tests:
+  ```bash
+  pytest tests/
+  ```
 
-# Install dependencies
-pip install -r requirements.txt
+## Development Notes
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your API tokens
-```
+- Each client/section gets a dedicated tab in Sheets.
+- Pipe (`|`) delimiter used for account/subject extraction in ClickUp.
+- API calls print errors and return empty lists/False on failure.
+- Credentials are discovered from multiple relative paths for flexibility.
+- All export functions append to the next available row.
 
-### Configuration
-1. **Google Sheets API**: Place `credentials.json` in project root
-2. **ClickUp**: Add `CLICKUP_API_TOKEN` to `.env`
-3. **Asana**: Add `ASANA_API_TOKEN` to `.env`
+## Minimal Improvement Suggestions
+
+- Move API data inspection logic from `/tests` to a dedicated `/scripts` or `/tools` folder for better separation of concerns.
+- Consider using more specific ClickUp API endpoints or query parameters for efficient data retrieval (e.g., filter by status, assignee, or custom fields).
+- Centralize configuration (board IDs, spreadsheet IDs) in a single settings file or class.
+- Add type hints and docstrings for improved maintainability.
+- Implement logging instead of print statements for better error tracking and debugging.
+
+---
+
+**Next Steps:**  
+Review API data structure and optimize queries for smarter, more efficient data processing.
 
 ## 📊 Service Integrations
 
@@ -218,6 +235,9 @@ For issues or questions:
 - Advanced analytics and reporting
 - Automated scheduling and notifications
 - AI-powered insights and predictions
+
+Refactor/export-pipe-logic-tests
+
 - 
 ## 🚦 Next Steps (Refactor Branch)
 
