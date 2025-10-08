@@ -1,0 +1,115 @@
+# Info Synthesizer Configuration
+# DO NOT PUT SECRETS HERE - use repo root .env and credentials.json
+
+project_name: "Client Project X"
+
+# Period configuration
+period:
+  mode: rolling  # rolling | fixed
+  days: 7  # lookback days for rolling mode
+  # start_date: "2025-10-01"  # for fixed mode
+  # end_date: "2025-10-08"
+
+# AI Provider configuration
+providers:
+  ai_summarizer: "gemini"  # primary AI provider for synthesis
+  sentiment_fallback:
+    - "gpt_business"
+    - "google_nlp"
+    - "none"
+
+# Input sources configuration
+inputs:
+  # Gmail/Calendar/Docs summaries (future)
+  gmail:
+    enabled: false
+    mode: "summaries"  # summaries | raw
+  
+  calendar:
+    enabled: false
+    mode: "summaries"
+  
+  docs:
+    enabled: false
+    mode: "summaries"
+  
+  # ClickUp task data
+  clickup:
+    enabled: true
+    list_id: "REPLACE_ME"  # TODO: Add your ClickUp list ID
+    include_comments: true
+    include_descriptions: true
+    include_attachments_metadata: true
+  
+  # Slack threads and messages
+  slack:
+    enabled: true
+    mode: "hybrid"  # api | digest | dropbox | hybrid
+    channels:
+      - "proj-x-client"
+      - "proj-x-internal"
+    lookback_days: 7
+    include_threads: true
+    include_pins: true
+    include_reactions: true
+
+# Synthesis configuration
+synthesis:
+  sentiment:
+    enabled: true
+    provider: "gemini"  # gemini | gpt_business | google_nlp | none
+  
+  risk_detection:
+    enabled: true
+    keywords:
+      - "blocked"
+      - "blocker"
+      - "risk"
+      - "issue"
+      - "critical"
+      - "urgent"
+      - "delayed"
+  
+  urgency_rules:
+    high:
+      - "asap"
+      - "urgent"
+      - "critical"
+      - "immediately"
+    medium:
+      - "important"
+      - "priority"
+      - "soon"
+  
+  sections:
+    - "Highlights"
+    - "What's New/Changed"
+    - "Decisions"
+    - "Risks & Blockers"
+    - "Action Items"
+    - "Validation/Release Status"
+    - "Sources"
+    - "Sentiment & Hotspots"
+
+# Publishing configuration
+publish:
+  google_doc:
+    enabled: true
+    parent_drive_id: "REPLACE_ME"  # TODO: Add your Google Drive folder ID
+    title_format: "Weekly Info Synthesis — {project} — {date}"
+    link_share: "domain"  # anyone | domain | restricted
+  
+  clickup_doc:
+    enabled: true
+    parent_type: "folder"  # folder | list | space
+    parent_id: "REPLACE_ME"  # TODO: Add your ClickUp parent ID
+    title_format: "Weekly Info Synthesis — {project} — {date}"
+  
+  clickup_task_tldr:
+    enabled: false  # TODO: Enable to add TLDR to task descriptions
+
+# Run metadata
+run:
+  timezone: "America/Los_Angeles"
+  locale: "en_US"
+
